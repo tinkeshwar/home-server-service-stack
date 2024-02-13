@@ -1,37 +1,17 @@
 services:
-  nginx-proxy-manager:
+  proxy:
     image: 'jc21/nginx-proxy-manager:latest'
-    container_name: nginx-proxy
+    container_name: proxy
     restart: unless-stopped
     ports:
       - '80:80'
       - '443:443'
       - '81:81'
     environment:
-      - TZ=Asia/Kolkata
-      - DB_MYSQL_HOST=db
-      - DB_MYSQL_PORT=3306
-      - DB_MYSQL_USER=npm
-      - DB_MYSQL_PASSWORD=npm
-      - DB_MYSQL_NAME=npm
-      - PUID=1000
-      - PGID=1000
+      DB_SQLITE_FILE: "/data/database.sqlite"
     volumes:
       - /home/tinkeshwar/Docker/proxy/data:/data
       - /home/tinkeshwar/Docker/proxy/letsencrypt:/etc/letsencrypt
-    depends_on:
-      - proxy-db
-  proxy-db:
-    image: 'jc21/mariadb-aria:latest'
-    restart: unless-stopped
-    environment:
-      - MYSQL_ROOT_PASSWORD=npm
-      - MYSQL_DATABASE=npm
-      - MYSQL_USER=npm
-      - MYSQL_PASSWORD=npm
-      - MARIADB_AUTO_UPGRADE=1
-    volumes:
-      - /home/tinkeshwar/Docker/proxy/mysql:/var/lib/mysql
   nextcloud:
     image: 'nextcloud:latest'
     container_name: nextcloud
