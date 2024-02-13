@@ -19,6 +19,8 @@ services:
     volumes:
       - /home/tinkeshwar/Docker/proxy/data:/data
       - /home/tinkeshwar/Docker/proxy/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - proxy-db
   proxy-db:
     image: 'jc21/mariadb-aria:latest'
     restart: unless-stopped
