@@ -8,8 +8,8 @@ services:
       - '443:443'
       - '81:81'
     environment:
-      - TZ=Asia/Kolkata
-      - DB_SQLITE_FILE="/data/database.sqlite"
+      TZ: Asia/Kolkata
+      DB_SQLITE_FILE: "/data/database.sqlite"
     volumes:
       - /home/tinkeshwar/Docker/proxy/data:/data
       - /home/tinkeshwar/Docker/proxy/letsencrypt:/etc/letsencrypt
