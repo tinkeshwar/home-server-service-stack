@@ -9,18 +9,113 @@ services:
       - '443:443'
       - '81:81'
     environment:
-      DB_SQLITE_FILE: "/data/database.sqlite"
+      - TZ=Asia/Kolkata
+      - DB_SQLITE_FILE="/data/database.sqlite"
     volumes:
-      - ./data:/data
-      - ./letsencrypt:/etc/letsencrypt
+      - /home/tinkeshwar/Docker/proxy/data:/data
+      - /home/tinkeshwar/Docker/proxy/letsencrypt:/etc/letsencrypt
   nextcloud:
     image: 'nextcloud:latest'
     container_name: nextcloud
+    restart: always
+    links:
+      - nextcloud-db
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - MYSQL_PASSWORD=admin@12345
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_HOST=nextcloud-db
+    volumes:
+      - /home/tinkeshwar/Docker/nextcloud/appdata:/config
+      - /cloud/nextcloud/data:/data
+  nextcloud-db:
+    image: mariadb:10.6
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
+    volumes:
+      - /cloud/nextcloud/db:/var/lib/mysql
+    environment:
+      - TZ=Asia/Kolkata
+      - MYSQL_ROOT_PASSWORD=root@1234
+      - MYSQL_PASSWORD=admin@12345
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    user: uid:gid
+    network_mode: 'host'
+    volumes:
+      - /home/tinkeshwar/Docker/jellyfin/config:/config
+      - /home/tinkeshwar/Docker/jellyfin/cache:/cache
+      - /media:/media
+    restart: 'unless-stopped'
+    environment:
+      - TZ=Asia/Kolkata
+  homer:
+    image: b4bz/homer:latest
+    container_name: homer
+    volumes:
+      - /home/tinkeshwar/Docker/homer/:/www/assets
+    user: uid:gid
+    environment:
+      - TZ=Asia/Kolkata
+      - INIT_ASSETS=1
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - WEBUI_PORT=8080
+    volumes:
+      - /home/tinkeshwar/Docker/qtorrent/config:/config
+      - /media/Downloads:/downloads
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
     restart: unless-stopped
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Kolkata
     volumes:
-      - ./nextcloud/appdata:/config
-      - ./nextcloud/data:/data
+      - /home/tinkeshwar/Docker/radarr/config:/config
+      - /media/Movies:/movies
+      - /media/Downloads:/downloads
+    restart: unless-stopped
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+    volumes:
+      - /home/tinkeshwar/Docker/sonarr/config:/config
+      - /media/TV:/tv
+      - /media/Downloads:/downloads
+    restart: unless-stopped
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80:80/tcp"
+    environment:
+      - TZ=Asia/Kolkata
+    volumes:
+      - '/home/tinkeshwar/Docker/etc-pihole:/etc/pihole'
+      - '/home/tinkeshwar/Docker/etc-dnsmasq.d:/etc/dnsmasq.d'
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
