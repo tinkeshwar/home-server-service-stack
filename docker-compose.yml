@@ -10,7 +10,17 @@ services:
       - '81:81'
     environment:
       DB_SQLITE_FILE: "/data/database.sqlite"
-    
     volumes:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
+  nextcloud:
+    image: 'nextcloud:latest'
+    container_name: nextcloud
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+    volumes:
+      - ./nextcloud/appdata:/config
+      - ./nextcloud/data:/data
