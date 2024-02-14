@@ -54,10 +54,13 @@ services:
       - PGID=1000
       - TZ=Asia/Kolkata
   homer:
-    image: b4bz/homer:latest
+    image: ghcr.io/ajnart/homarr:latest
     container_name: homer
     volumes:
-      - /home/tinkeshwar/Docker/homer/:/www/assets
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/tinkeshwar/Docker/homarr/configs:/app/data/configs
+      - /home/tinkeshwar/Docker/homarr/icons:/app/public/icons
+      - /home/tinkeshwar/Docker/homarr/data:/data
     environment:
       - PUID=1000
       - PGID=1000
