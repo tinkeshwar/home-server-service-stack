@@ -92,6 +92,19 @@ services:
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
+  nzbhydra2:
+    image: lscr.io/linuxserver/nzbhydra2:latest
+    container_name: nzbhydra2
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+    volumes:
+      - /home/tinkeshwar/Docker/nzbhydra2/config:/config
+      - /media/Downloads:/downloads
+    ports:
+      - 5076:5076
+    restart: unless-stopped
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
