@@ -102,3 +102,14 @@ services:
       - /media/TV:/tv
       - /media/Downloads:/downloads
     restart: unless-stopped
+  file-browser:
+    image: filebrowser/filebrowser:s6
+    container_name: file-browser
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+    volumes:
+      - /home/tinkeshwar/Docker/filebrowser/filebrowser.db:/database/filebrowser.db
+      - /home/tinkeshwar/Docker/filebrowser/settings.json:/config/settings.json
+      - /media:/srv
