@@ -109,6 +109,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Kolkata
+    ports:
+      - 8080:80
     volumes:
       - /home/tinkeshwar/Docker/filebrowser/filebrowser.db:/database/filebrowser.db
       - /home/tinkeshwar/Docker/filebrowser/settings.json:/config/settings.json
