@@ -92,18 +92,20 @@ services:
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
-  sabnzbd:
-    image: lscr.io/linuxserver/sabnzbd:latest
-    container_name: sabnzbd
+  deluge:
+    image: lscr.io/linuxserver/deluge:latest
+    container_name: deluge
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Etc/UTC
+      - TZ=Asia/Kolkata
     volumes:
-      - /home/tinkeshwar/Docker/sabnzbd/config:/config
+      - /home/tinkeshwar/Docker/deluge/config:/config
       - /media/Downloads:/downloads
     ports:
-      - 8080:8080
+      - 8112:8112
+      - 6881:6881
+      - 6881:6881/udp
     restart: unless-stopped
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
