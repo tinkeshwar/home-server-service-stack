@@ -89,6 +89,7 @@ services:
       - /home/tinkeshwar/Docker/qtorrent/config:/config
       - /media/Downloads:/downloads
     ports:
+      - 9596:8080
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
