@@ -44,7 +44,6 @@ services:
   jellyfin:
     image: jellyfin/jellyfin:latest
     container_name: jellyfin
-    network_mode: 'host'
     volumes:
       - /home/tinkeshwar/Docker/jellyfin/config:/config
       - /home/tinkeshwar/Docker/jellyfin/cache:/cache
