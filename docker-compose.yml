@@ -41,18 +41,6 @@ services:
       - MYSQL_PASSWORD=admin@12345
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
-  jellyfin:
-    image: jellyfin/jellyfin:latest
-    container_name: jellyfin
-    volumes:
-      - /home/tinkeshwar/Docker/jellyfin/config:/config
-      - /home/tinkeshwar/Docker/jellyfin/cache:/cache
-      - /media:/media
-    restart: 'unless-stopped'
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Kolkata
   homer:
     image: ghcr.io/ajnart/homarr:latest
     container_name: homer
@@ -66,6 +54,29 @@ services:
       - PGID=1000
       - TZ=Asia/Kolkata
       - INIT_ASSETS=1
+  file-browser:
+    image: filebrowser/filebrowser:s6
+    container_name: file-browser
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+    volumes:
+      - /home/tinkeshwar/Docker/filebrowser/filebrowser.db:/database/filebrowser.db
+      - /home/tinkeshwar/Docker/filebrowser/settings.json:/config/settings.json
+      - /media:/srv
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    volumes:
+      - /home/tinkeshwar/Docker/jellyfin/config:/config
+      - /home/tinkeshwar/Docker/jellyfin/cache:/cache
+      - /media:/media
+    restart: 'unless-stopped'
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
@@ -115,14 +126,3 @@ services:
       - /media/TV:/tv
       - /media/Downloads:/downloads
     restart: unless-stopped
-  file-browser:
-    image: filebrowser/filebrowser:s6
-    container_name: file-browser
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Kolkata
-    volumes:
-      - /home/tinkeshwar/Docker/filebrowser/filebrowser.db:/database/filebrowser.db
-      - /home/tinkeshwar/Docker/filebrowser/settings.json:/config/settings.json
-      - /media:/srv
