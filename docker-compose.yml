@@ -92,18 +92,18 @@ services:
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
-  nzbhydra2:
-    image: lscr.io/linuxserver/nzbhydra2:latest
-    container_name: nzbhydra2
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Asia/Kolkata
+      - TZ=Etc/UTC
     volumes:
-      - /home/tinkeshwar/Docker/nzbhydra2/config:/config
+      - /home/tinkeshwar/Docker/sabnzbd/config:/config
       - /media/Downloads:/downloads
     ports:
-      - 5076:5076
+      - 8080:8080
     restart: unless-stopped
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
