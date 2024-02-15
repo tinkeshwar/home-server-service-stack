@@ -77,6 +77,15 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Kolkata
+  jellyseerr:
+       image: fallenbagel/jellyseerr:latest
+       container_name: jellyseerr
+       environment:
+            - LOG_LEVEL=debug
+            - TZ=Asia/Kolkata
+       volumes:
+          - /cloud/Docker/jellyseerr/config:/app/config
+       restart: unless-stopped
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
