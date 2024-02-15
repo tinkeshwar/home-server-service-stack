@@ -77,20 +77,6 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Kolkata
-  plex:
-    image: lscr.io/linuxserver/plex:latest
-    container_name: plex
-    network_mode: host
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
-      - VERSION=docker
-    volumes:
-      - /cloud/Docker/plex/config:/config
-      - /media/Movies:/movies
-      - /media/TV:/tv
-    restart: unless-stopped
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
@@ -151,16 +137,6 @@ services:
       - /cloud/Docker/sonarr/config:/config
       - /media/TV:/tv
       - /media/Downloads:/downloads
-    restart: unless-stopped
-  overseerr:
-    image: lscr.io/linuxserver/overseerr:latest
-    container_name: overseerr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Kolkata
-    volumes:
-      - /cloud/Docker/overseerr/config:/config
     restart: unless-stopped
   whisparr:
     container_name: whisparr
