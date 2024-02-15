@@ -162,6 +162,18 @@ services:
     volumes:
       - /cloud/Docker/overseerr/config:/config
     restart: unless-stopped
+  whisparr:
+    container_name: whisparr
+    image: ghcr.io/hotio/whisparr
+    ports:
+      - "6969:6969"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+    volumes:
+      - /cloud/Docker/whisparr/config:/config
+      - /media/Porn:/data
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     container_name: flaresolverr
