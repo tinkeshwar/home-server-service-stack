@@ -10,8 +10,8 @@ services:
     environment:
       DB_SQLITE_FILE: "/data/database.sqlite"
     volumes:
-      - /home/tinkeshwar/Docker/proxy/data:/data
-      - /home/tinkeshwar/Docker/proxy/letsencrypt:/etc/letsencrypt
+      - /cloud/Docker/proxy/data:/data
+      - /cloud/Docker/proxy/letsencrypt:/etc/letsencrypt
   nextcloud:
     image: 'nextcloud:latest'
     container_name: nextcloud
@@ -27,7 +27,7 @@ services:
       - MYSQL_USER=nextcloud
       - MYSQL_HOST=nextcloud-db
     volumes:
-      - /home/tinkeshwar/Docker/nextcloud/appdata:/config
+      - /cloud/Docker/nextcloud/appdata:/config
       - /cloud/nextcloud/data:/data
   nextcloud-db:
     image: mariadb:10.6
@@ -46,9 +46,9 @@ services:
     container_name: homer
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /home/tinkeshwar/Docker/homarr/configs:/app/data/configs
-      - /home/tinkeshwar/Docker/homarr/icons:/app/public/icons
-      - /home/tinkeshwar/Docker/homarr/data:/data
+      - /cloud/Docker/homarr/configs:/app/data/configs
+      - /cloud/Docker/homarr/icons:/app/public/icons
+      - /cloud/Docker/homarr/data:/data
     environment:
       - PUID=1000
       - PGID=1000
@@ -62,15 +62,15 @@ services:
       - PGID=1000
       - TZ=Asia/Kolkata
     volumes:
-      - /home/tinkeshwar/Docker/filebrowser/filebrowser.db:/database/filebrowser.db
-      - /home/tinkeshwar/Docker/filebrowser/settings.json:/config/settings.json
+      - /cloud/Docker/filebrowser/filebrowser.db:/database/filebrowser.db
+      - /cloud/Docker/filebrowser/settings.json:/config/settings.json
       - /media:/srv
   jellyfin:
     image: jellyfin/jellyfin:latest
     container_name: jellyfin
     volumes:
-      - /home/tinkeshwar/Docker/jellyfin/config:/config
-      - /home/tinkeshwar/Docker/jellyfin/cache:/cache
+      - /cloud/Docker/jellyfin/config:/config
+      - /cloud/Docker/jellyfin/cache:/cache
       - /media:/media
     restart: 'unless-stopped'
     environment:
@@ -87,7 +87,7 @@ services:
       - TZ=Etc/UTC
       - VERSION=docker
     volumes:
-      - /home/tinkeshwar/Docker/plex/config:/config
+      - /cloud/Docker/plex/config:/config
       - /media/Movies:/movies
       - /media/TV:/tv
     restart: unless-stopped
@@ -100,7 +100,7 @@ services:
       - TZ=Asia/Kolkata
       - WEBUI_PORT=8080
     volumes:
-      - /home/tinkeshwar/Docker/qtorrent/config:/config
+      - /cloud/Docker/qtorrent/config:/config
       - /media/Downloads:/downloads
     restart: unless-stopped
   deluge:
@@ -111,7 +111,7 @@ services:
       - PGID=1000
       - TZ=Asia/Kolkata
     volumes:
-      - /home/tinkeshwar/Docker/deluge/config:/config
+      - /cloud/Docker/deluge/config:/config
       - /media/Downloads:/downloads
     ports:
       - 8112:8112
@@ -126,7 +126,7 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - /home/tinkeshwar/Docker/prowlarr/config:/config
+      - /cloud/Docker/prowlarr/config:/config
     restart: unless-stopped
   radarr:
     image: lscr.io/linuxserver/radarr:latest
@@ -136,7 +136,7 @@ services:
       - PGID=1000
       - TZ=Asia/Kolkata
     volumes:
-      - /home/tinkeshwar/Docker/radarr/config:/config
+      - /cloud/Docker/radarr/config:/config
       - /media/Movies:/movies
       - /media/Downloads:/downloads
     restart: unless-stopped
@@ -148,7 +148,7 @@ services:
       - PGID=1000
       - TZ=Asia/Kolkata
     volumes:
-      - /home/tinkeshwar/Docker/sonarr/config:/config
+      - /cloud/Docker/sonarr/config:/config
       - /media/TV:/tv
       - /media/Downloads:/downloads
     restart: unless-stopped
@@ -160,7 +160,7 @@ services:
       - PGID=1000
       - TZ=Asia/Kolkata
     volumes:
-      - /home/tinkeshwar/Docker/overseerr/config:/config
+      - /cloud/Docker/overseerr/config:/config
     restart: unless-stopped
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
