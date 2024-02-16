@@ -187,6 +187,8 @@ services:
     volumes:
       - '/cloud/Docker/adguard/work:/opt/adguardhome/work'
       - '/cloud/Docker/adguard/config:/opt/adguardhome/conf'
+    environment:
+      - TZ=Asia/Kolkata
     ports:
       - 53:53/tcp
       - 53:53/udp
