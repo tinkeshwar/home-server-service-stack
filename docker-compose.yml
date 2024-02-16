@@ -158,7 +158,8 @@ services:
       - TZ=Asia/Kolkata
     volumes:
       - /cloud/Docker/whisparr/config:/config
-      - /media/Porn:/data
+      - /media/Porn:/porn
+      - /media/Downloads:/downloads
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     container_name: flaresolverr
