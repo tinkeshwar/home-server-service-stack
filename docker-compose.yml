@@ -167,3 +167,17 @@ services:
       - LOG_LEVEL=info
       - TZ=Asia/Kolkata
     restart: unless-stopped 
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:v1.1.0
+    container_name: mealie
+    volumes:
+      - /cloud/Docker/mealie:/app/data/
+    environment:
+      - ALLOW_SIGNUP=true
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - MAX_WORKERS=1
+      - WEB_CONCURRENCY=1
+      - BASE_URL=https://meal.tinkeshwar.in
+    restart: always
