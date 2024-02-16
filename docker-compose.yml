@@ -168,7 +168,7 @@ services:
       - TZ=Asia/Kolkata
     restart: unless-stopped 
   mealie:
-    image: ghcr.io/mealie-recipes/mealie:v1.1.0
+    image: ghcr.io/mealie-recipes/mealie:latest
     container_name: mealie
     volumes:
       - /cloud/Docker/mealie:/app/data/
