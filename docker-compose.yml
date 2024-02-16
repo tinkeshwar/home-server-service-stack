@@ -181,3 +181,17 @@ services:
       - WEB_CONCURRENCY=1
       - BASE_URL=https://meal.tinkeshwar.in
     restart: always
+  adguard:
+    image: adguard/adguardhome
+    container_name: adguard
+    volumes:
+      - '/cloud/Docker/adguard/work:/opt/adguardhome/work'
+      - '/cloud/Docker/adguard/config:/opt/adguardhome/conf'
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+      - 853:853/tcp
+      - 853:853/udp
+      - 5443:5443/tcp
+      - 5443:5443/udp
+    restart: unless-stopped
