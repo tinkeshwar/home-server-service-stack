@@ -178,11 +178,3 @@ services:
       - WEB_CONCURRENCY=1
       - BASE_URL=https://meal.tinkeshwar.in
     restart: always
-  twingate-home-server-tinkeshwar:
-    image: twingate/connector:latest
-    environment:
-      - TWINGATE_NETWORK=tinkeshwar
-      - TWINGATE_ACCESS_TOKEN=eyJhbGciOiJFUzI1NiIsImtpZCI6Ii1ZOGJpOFpBYTFTNklyV2x0R05RZFlnd0twTHU3SzJUalBEZkhwbllnT28iLCJ0eXAiOiJEQVQifQ.eyJudCI6IkFOIiwiYWlkIjoiMjMzNDY2IiwiZGlkIjoiMTI0MzQ4MyIsImp0aSI6IjBmYWMzNDEzLTAzMTMtNGY0Ny05ODRmLTdiZDgzYzUwODMxYyIsImlzcyI6InR3aW5nYXRlIiwiYXVkIjoidGlua2VzaHdhciIsImV4cCI6MTcwODE4MTE2OCwiaWF0IjoxNzA4MTc3NTY4LCJ2ZXIiOiI0IiwidGlkIjoiNzMyNDYiLCJybnciOjE3MDgxNzc4ODIsInJuZXRpZCI6IjkzNTAwIn0.Ep_6AK-QfeJvPF3-4ofYGnzkec-gNwsdO5qzy2lIi2P-GzX6w4lwtH7BBrg2D4Rlr7VEgbxhaPe6iEVXmQVQPA
-      - TWINGATE_REFRESH_TOKEN=nl-Js-UmMvAuZ7Z9pyN_DVrwLgYVAk8ycFp-zgmyHFbQOqN9zRnqg71xgeSxxELhy6wockJuZBAYRnWFuA_tvM83IGfInDRN4yCaJQrkdHu4ng6Xuyof-KEWwgkKGk0GsYgz4Q
-      - TWINGATE_LOG_LEVEL=3
-    restart: always
