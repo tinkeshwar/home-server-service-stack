@@ -109,10 +109,6 @@ services:
     volumes:
       - /cloud/Docker/deluge/config:/config
       - /media/Downloads:/downloads
-    ports:
-      - 8112:8112
-      - 6881:6881
-      - 6881:6881/udp
     restart: unless-stopped
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
