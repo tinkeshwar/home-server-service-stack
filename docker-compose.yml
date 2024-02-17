@@ -120,7 +120,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Etc/UTC
+      - TZ=Asia/Kolkata
     volumes:
       - /cloud/Docker/prowlarr/config:/config
     restart: unless-stopped
@@ -130,7 +130,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Etc/UTC
+      - TZ=Asia/Kolkata
       - AUTO_UPDATE=true
     volumes:
       - /cloud/Docker/jackett/data:/config
