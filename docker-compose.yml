@@ -98,9 +98,6 @@ services:
     volumes:
       - /cloud/Docker/qtorrent/config:/config
       - /media/Downloads:/downloads
-    ports:
-      - 6881:6881
-      - 6881:6881/udp
     restart: unless-stopped
   deluge:
     image: lscr.io/linuxserver/deluge:latest
