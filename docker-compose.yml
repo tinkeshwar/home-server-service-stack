@@ -94,9 +94,13 @@ services:
       - PGID=1000
       - TZ=Asia/Kolkata
       - WEBUI_PORT=8080
+      - TORRENTING_PORT=6881
     volumes:
       - /cloud/Docker/qtorrent/config:/config
       - /media/Downloads:/downloads
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
     restart: unless-stopped
   deluge:
     image: lscr.io/linuxserver/deluge:latest
