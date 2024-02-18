@@ -7,7 +7,7 @@ services:
       - DASHDOT_ENABLE_CPU_TEMPS=true
       - DASHDOT_PAGE_TITLE='Tinkeshwar Singh Rajput'
     volumes:
-      - /cloud/Docker/dash:/mnt/host:ro
+      - /:/mnt/host:ro
   proxy:
     image: 'jc21/nginx-proxy-manager:latest'
     container_name: proxy
