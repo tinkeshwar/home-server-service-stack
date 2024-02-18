@@ -4,8 +4,8 @@ services:
     restart: unless-stopped
     privileged: true
     environment:
-      DASHDOT_ENABLE_CPU_TEMPS: 'true'
-      DASHDOT_PAGE_TITLE: 'Tinkeshwar Singh Rajput'
+      - DASHDOT_ENABLE_CPU_TEMPS=true
+      - DASHDOT_PAGE_TITLE='Tinkeshwar Singh Rajput'
     volumes:
       - /cloud/Docker/dash:/mnt/host:ro
   proxy:
