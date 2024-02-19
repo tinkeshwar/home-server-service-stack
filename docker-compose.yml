@@ -159,3 +159,7 @@ services:
       - WEB_CONCURRENCY=1
       - BASE_URL=https://meal.tinkeshwar.in
     restart: always
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
