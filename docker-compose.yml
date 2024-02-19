@@ -173,6 +173,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Kolkata
+    ports:
+      - 9000:8123
     volumes:
       - /cloud/Docker/homeassistant/config:/config
     restart: unless-stopped
