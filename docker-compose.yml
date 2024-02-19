@@ -166,3 +166,14 @@ services:
       - TZ=Asia/Kolkata
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+  homeassistant:
+    image: lscr.io/linuxserver/homeassistant:latest
+    container_name: homeassistant
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+    volumes:
+      - /cloud/Docker/homeassistant/config:/config
+    restart: unless-stopped
