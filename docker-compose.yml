@@ -186,10 +186,10 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Kolkata
-      - SERVERURL=auto
+      - SERVERURL=home.tinkeshwar.com
       - SERVERPORT=51820
       - PEERS=5
-      - PEERDNS=auto
+      - PEERDNS=1.1.1.1
     volumes:
       - /cloud/Docker/wireguard/config:/config
       - /cloud/Docker/wireguard/modules:/lib/modules
