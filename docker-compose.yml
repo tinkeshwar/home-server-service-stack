@@ -176,70 +176,25 @@ services:
     volumes:
       - /cloud/Docker/homeassistant/config:/config
     restart: unless-stopped
-  photoprism:
-    image: photoprism/photoprism:latest
-    container_name: photoprism
-    restart: unless-stopped
-    stop_grace_period: 10s
-    depends_on:
-      - mariadb-photoprism
-    security_opt:
-      - seccomp:unconfined
-      - apparmor:unconfined
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
     environment:
-      PHOTOPRISM_ADMIN_USER: "tinkeshwar" 
-      PHOTOPRISM_ADMIN_PASSWORD: "insecure"
-      PHOTOPRISM_AUTH_MODE: "password"
-      PHOTOPRISM_SITE_URL: "http://photos.tinkeshwar.in/"
-      PHOTOPRISM_DISABLE_TLS: "false"
-      PHOTOPRISM_DEFAULT_TLS: "true"
-      PHOTOPRISM_ORIGINALS_LIMIT: 5000
-      PHOTOPRISM_HTTP_COMPRESSION: "gzip"
-      PHOTOPRISM_LOG_LEVEL: "info"
-      PHOTOPRISM_READONLY: "false"
-      PHOTOPRISM_EXPERIMENTAL: "false"
-      PHOTOPRISM_DISABLE_CHOWN: "false"
-      PHOTOPRISM_DISABLE_WEBDAV: "false"
-      PHOTOPRISM_DISABLE_SETTINGS: "false"
-      PHOTOPRISM_DISABLE_TENSORFLOW: "false"
-      PHOTOPRISM_DISABLE_FACES: "false"
-      PHOTOPRISM_DISABLE_CLASSIFICATION: "false"
-      PHOTOPRISM_DISABLE_VECTORS: "false"
-      PHOTOPRISM_DISABLE_RAW: "false"
-      PHOTOPRISM_RAW_PRESETS: "false"
-      PHOTOPRISM_JPEG_QUALITY: 85
-      PHOTOPRISM_DETECT_NSFW: "false"
-      PHOTOPRISM_UPLOAD_NSFW: "true"
-      PHOTOPRISM_DATABASE_DRIVER: "mysql"
-      PHOTOPRISM_DATABASE_SERVER: "mariadb-photoprism:3306"
-      PHOTOPRISM_DATABASE_NAME: "photoprism"
-      PHOTOPRISM_DATABASE_USER: "photoprism"
-      PHOTOPRISM_DATABASE_PASSWORD: "insecure"
-      PHOTOPRISM_SITE_CAPTION: "Personal Photo Cloud"
-      PHOTOPRISM_SITE_DESCRIPTION: "Tinkeshwar's Personal Photo Cloud server"
-      PHOTOPRISM_SITE_AUTHOR: "Tinkeshwar Singh"
-      PHOTOPRISM_UID: 1000
-      PHOTOPRISM_GID: 1000
-      PHOTOPRISM_TZ: "Asia/Kolkata"
-    working_dir: "/photoprism"
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - SERVERURL=auto
+      - SERVERPORT=51820
+      - PEERS=5
+      - PEERDNS=auto
     volumes:
-      - "/cloud/photoprism/cache:/photoprism/storage"
-      - "/cloud/photoprism/data:/photoprism/originals"
-  mariadb-photoprism:
-    image: mariadb:11
-    container_name: mariadb-photoprism
-    restart: unless-stopped
-    stop_grace_period: 5s
-    security_opt:
-      - seccomp:unconfined
-      - apparmor:unconfined
-    command: --innodb-buffer-pool-size=512M --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120
-    volumes:
-      - "/cloud/photoprism/database:/var/lib/mysql"
-    environment:
-      MARIADB_AUTO_UPGRADE: "1"
-      MARIADB_INITDB_SKIP_TZINFO: "1"
-      MARIADB_DATABASE: "photoprism"
-      MARIADB_USER: "photoprism"
-      MARIADB_PASSWORD: "insecure"
-      MARIADB_ROOT_PASSWORD: "insecure"
+      - /cloud/Docker/wireguard/config:/config
+      - /cloud/Docker/wireguard/modules:/lib/modules
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: always
