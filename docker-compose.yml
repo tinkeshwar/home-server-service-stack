@@ -149,8 +149,6 @@ services:
       - /cloud/Docker/bazarr/config:/config
       - /media/Movies:/movies
       - /media/TV:/tv
-    ports:
-      - 6767:6767
     restart: unless-stopped
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
