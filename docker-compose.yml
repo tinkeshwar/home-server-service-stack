@@ -138,6 +138,20 @@ services:
       - /cloud/Docker/whisparr/config:/config
       - /media/Porn:/data
       - /media/Downloads:/downloads
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+    volumes:
+      - /cloud/Docker/bazarr/config:/config
+      - /media/Movies:/movies
+      - /media/TV:/tv
+    ports:
+      - 6767:6767
+    restart: unless-stopped
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     container_name: flaresolverr
