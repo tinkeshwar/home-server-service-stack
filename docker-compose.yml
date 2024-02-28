@@ -25,6 +25,7 @@ services:
   homer:
     image: ghcr.io/ajnart/homarr:latest
     container_name: homer
+    restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /cloud/Docker/homarr/configs:/app/data/configs
@@ -38,6 +39,7 @@ services:
   file-browser:
     image: filebrowser/filebrowser:s6
     container_name: file-browser
+    restart: unless-stopped
     environment:
       - PUID=1000
       - PGID=1000
@@ -49,11 +51,11 @@ services:
   jellyfin:
     image: jellyfin/jellyfin:latest
     container_name: jellyfin
+    restart: 'unless-stopped'
     volumes:
       - /cloud/Docker/jellyfin/config:/config
       - /cloud/Docker/jellyfin/cache:/cache
       - /media:/media
-    restart: 'unless-stopped'
     environment:
       - PUID=1000
       - PGID=1000
@@ -61,15 +63,16 @@ services:
   jellyseerr:
        image: fallenbagel/jellyseerr:latest
        container_name: jellyseerr
+       restart: unless-stopped
        environment:
             - LOG_LEVEL=debug
             - TZ=Asia/Kolkata
        volumes:
           - /cloud/Docker/jellyseerr/config:/app/config
-       restart: unless-stopped
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
+    restart: unless-stopped
     environment:
       - PUID=1000
       - PGID=1000
@@ -79,10 +82,10 @@ services:
     volumes:
       - /cloud/Docker/qtorrent/config:/config
       - /media/Downloads:/downloads
-    restart: unless-stopped
   deluge:
     image: lscr.io/linuxserver/deluge:latest
     container_name: deluge
+    restart: unless-stopped
     environment:
       - PUID=1000
       - PGID=1000
@@ -90,20 +93,20 @@ services:
     volumes:
       - /cloud/Docker/deluge/config:/config
       - /media/Downloads:/downloads
-    restart: unless-stopped
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
+    restart: unless-stopped
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Kolkata
     volumes:
       - /cloud/Docker/prowlarr/config:/config
-    restart: unless-stopped
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
+    restart: unless-stopped
     environment:
       - PUID=1000
       - PGID=1000
@@ -112,10 +115,10 @@ services:
       - /cloud/Docker/radarr/config:/config
       - /media/Movies:/movies
       - /media/Downloads:/downloads
-    restart: unless-stopped
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
+    restart: unless-stopped
     environment:
       - PUID=1000
       - PGID=1000
@@ -124,12 +127,10 @@ services:
       - /cloud/Docker/sonarr/config:/config
       - /media/TV:/tv
       - /media/Downloads:/downloads
-    restart: unless-stopped
   whisparr:
     container_name: whisparr
     image: ghcr.io/hotio/whisparr
-    ports:
-      - "6969:6969"
+    restart: unless-stopped
     environment:
       - PUID=1000
       - PGID=1000
@@ -141,6 +142,7 @@ services:
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
+    restart: unless-stopped
     environment:
       - PUID=1000
       - PGID=1000
@@ -149,17 +151,17 @@ services:
       - /cloud/Docker/bazarr/config:/config
       - /media/Movies:/movies
       - /media/TV:/tv
-    restart: unless-stopped
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     container_name: flaresolverr
+    restart: unless-stopped 
     environment:
       - LOG_LEVEL=info
       - TZ=Asia/Kolkata
-    restart: unless-stopped 
   mealie:
     image: ghcr.io/mealie-recipes/mealie:latest
     container_name: mealie
+    restart: always
     volumes:
       - /cloud/Docker/mealie:/app/data/
     environment:
@@ -170,10 +172,10 @@ services:
       - MAX_WORKERS=1
       - WEB_CONCURRENCY=1
       - BASE_URL=https://meal.tinkeshwar.in
-    restart: always
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower
+    restart: unless-stopped
     environment:
       - TZ=Asia/Kolkata
     volumes:
@@ -181,32 +183,10 @@ services:
   homeassistant:
     image: lscr.io/linuxserver/homeassistant:latest
     container_name: homeassistant
+    restart: unless-stopped
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Kolkata
     volumes:
       - /cloud/Docker/homeassistant/config:/config
-    restart: unless-stopped
-  wireguard:
-    image: lscr.io/linuxserver/wireguard:latest
-    container_name: wireguard
-    cap_add:
-      - NET_ADMIN
-      - SYS_MODULE
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Kolkata
-      - SERVERURL=home.tinkeshwar.com
-      - SERVERPORT=51820
-      - PEERS=5
-      - PEERDNS=1.1.1.1
-    volumes:
-      - /cloud/Docker/wireguard/config:/config
-      - /cloud/Docker/wireguard/modules:/lib/modules
-    ports:
-      - 51820:51820/udp
-    sysctls:
-      - net.ipv4.conf.all.src_valid_mark=1
-    restart: always
