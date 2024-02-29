@@ -103,6 +103,18 @@ services:
       - TZ=Asia/Kolkata
     volumes:
       - /cloud/Docker/prowlarr/config:/config
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - AUTO_UPDATE=true
+    volumes:
+      - /cloud/Docker/jackett/config:/config
+      - /media/Downloads:/downloads
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
