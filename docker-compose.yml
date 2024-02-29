@@ -15,11 +15,11 @@ services:
     restart: always
     volumes:
       - /cloud/Docker/filebrowser/config:/config
-      - /media1/Movies:/data/movies
-      - /media1/Misc:/data/misc
-      - /media2/Porn:/data/porn
-      - /media2/TV:/data/tv
-      - /media2/Downloads:/data/downloads
+      - /media1/Movies:/data/Movies
+      - /media1/Misc:/data/Misc
+      - /media2/Porn:/data/Porn
+      - /media2/TV:/data/TV
+      - /media2/Downloads:/data/Downloads
     environment:
       - PUID=1000
       - PGID=1000
