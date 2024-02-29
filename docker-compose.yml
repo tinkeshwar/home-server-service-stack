@@ -33,6 +33,7 @@ services:
     ports:
       - '80:80'
       - '443:443'
+      - '81:81'
     volumes:
       - /cloud/Docker/proxy/data:/data
       - /cloud/Docker/proxy/letsencrypt:/etc/letsencrypt
