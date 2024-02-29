@@ -13,10 +13,6 @@ services:
     image: 'jc21/nginx-proxy-manager:latest'
     container_name: proxy
     restart: unless-stopped
-    ports:
-      - '80:80'
-      - '443:443'
-      - '81:81'
     environment:
       DB_SQLITE_FILE: "/data/database.sqlite"
     volumes:
@@ -36,18 +32,6 @@ services:
       - PGID=1000
       - TZ=Asia/Kolkata
       - INIT_ASSETS=1
-  file-browser:
-    image: filebrowser/filebrowser:s6
-    container_name: file-browser
-    restart: unless-stopped
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Kolkata
-    volumes:
-      - /cloud/Docker/filebrowser/filebrowser.db:/database/filebrowser.db
-      - /cloud/Docker/filebrowser/settings.json:/config/settings.json
-      - /media:/srv
   jellyfin:
     image: jellyfin/jellyfin:latest
     container_name: jellyfin
@@ -55,7 +39,8 @@ services:
     volumes:
       - /cloud/Docker/jellyfin/config:/config
       - /cloud/Docker/jellyfin/cache:/cache
-      - /media:/media
+      - /media1:/media1
+      - /media2:/media2
     environment:
       - PUID=1000
       - PGID=1000
@@ -81,7 +66,7 @@ services:
       - TORRENTING_PORT=6881
     volumes:
       - /cloud/Docker/qtorrent/config:/config
-      - /media/Downloads:/downloads
+      - /media2/Downloads:/downloads
   deluge:
     image: lscr.io/linuxserver/deluge:latest
     container_name: deluge
@@ -92,7 +77,7 @@ services:
       - TZ=Asia/Kolkata
     volumes:
       - /cloud/Docker/deluge/config:/config
-      - /media/Downloads:/downloads
+      - /media2/Downloads:/downloads
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
@@ -114,7 +99,7 @@ services:
       - AUTO_UPDATE=true
     volumes:
       - /cloud/Docker/jackett/config:/config
-      - /media/Downloads:/downloads
+      - /media2/Downloads:/downloads
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
@@ -125,8 +110,8 @@ services:
       - TZ=Asia/Kolkata
     volumes:
       - /cloud/Docker/radarr/config:/config
-      - /media/Movies:/movies
-      - /media/Downloads:/downloads
+      - /media1/Movies:/movies
+      - /media2/Downloads:/downloads
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
@@ -137,8 +122,8 @@ services:
       - TZ=Asia/Kolkata
     volumes:
       - /cloud/Docker/sonarr/config:/config
-      - /media/TV:/tv
-      - /media/Downloads:/downloads
+      - /media2/TV:/tv
+      - /media2/Downloads:/downloads
   whisparr:
     container_name: whisparr
     image: ghcr.io/hotio/whisparr
@@ -149,8 +134,8 @@ services:
       - TZ=Asia/Kolkata
     volumes:
       - /cloud/Docker/whisparr/config:/config
-      - /media/Porn:/data
-      - /media/Downloads:/downloads
+      - /media2/Porn:/data
+      - /media2/Downloads:/downloads
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     container_name: flaresolverr
