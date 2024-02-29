@@ -30,6 +30,9 @@ services:
     restart: unless-stopped
     environment:
       DB_SQLITE_FILE: "/data/database.sqlite"
+    ports:
+      - '80:80'
+      - '443:443'
     volumes:
       - /cloud/Docker/proxy/data:/data
       - /cloud/Docker/proxy/letsencrypt:/etc/letsencrypt
