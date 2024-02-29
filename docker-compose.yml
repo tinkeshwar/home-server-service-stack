@@ -9,6 +9,21 @@ services:
       - DASHDOT_PAGE_TITLE='Tinkeshwar Singh Rajput'
     volumes:
       - /:/mnt/host:ro
+  filebrowser:
+    image: hurlenko/filebrowser
+    container_name: filebrowser
+    restart: always
+    volumes:
+      - /cloud/Docker/filebrowser/config:/config
+      - /media1/Movies:/data/movies
+      - /media1/Misc:/data/misc
+      - /media2/Porn:/data/porn
+      - /media2/TV:/data/tv
+      - /media2/Downloads:/data/downloads
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
   proxy:
     image: 'jc21/nginx-proxy-manager:latest'
     container_name: proxy
