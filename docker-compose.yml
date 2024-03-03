@@ -8,6 +8,8 @@ services:
       - /dev/net/tun:/dev/net/tun
     volumes:
       - /cloud/Docker/gluetun/config:/gluetun
+    networks:
+      - gluetun_network
     environment:
       - TZ=Asia/Kolkata
       - VPN_SERVICE_PROVIDER=custom
@@ -93,7 +95,8 @@ services:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
     restart: unless-stopped
-    network_mode: "service:gluetun"
+    networks:
+      - gluetun_network
     environment:
       - PUID=1000
       - PGID=1000
@@ -107,7 +110,8 @@ services:
     image: lscr.io/linuxserver/deluge:latest
     container_name: deluge
     restart: unless-stopped
-    network_mode: "service:gluetun"
+    networks:
+      - gluetun_network
     environment:
       - PUID=1000
       - PGID=1000
@@ -119,7 +123,8 @@ services:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
     restart: unless-stopped
-    network_mode: "service:gluetun"
+    networks:
+      - gluetun_network
     environment:
       - PUID=1000
       - PGID=1000
@@ -130,7 +135,8 @@ services:
     image: lscr.io/linuxserver/jackett:latest
     container_name: jackett
     restart: unless-stopped
-    network_mode: "service:gluetun"
+    networks:
+      - gluetun_network
     environment:
       - PUID=1000
       - PGID=1000
@@ -143,7 +149,8 @@ services:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
     restart: unless-stopped
-    network_mode: "service:gluetun"
+    networks:
+      - gluetun_network
     environment:
       - PUID=1000
       - PGID=1000
@@ -156,7 +163,8 @@ services:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
     restart: unless-stopped
-    network_mode: "service:gluetun"
+    networks:
+      - gluetun_network
     environment:
       - PUID=1000
       - PGID=1000
@@ -169,7 +177,8 @@ services:
     container_name: whisparr
     image: ghcr.io/hotio/whisparr
     restart: unless-stopped
-    network_mode: "service:gluetun"
+    networks:
+      - gluetun_network
     environment:
       - PUID=1000
       - PGID=1000
@@ -182,7 +191,8 @@ services:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     container_name: flaresolverr
     restart: unless-stopped 
-    network_mode: "service:gluetun"
+    networks:
+      - gluetun_network
     environment:
       - LOG_LEVEL=info
       - TZ=Asia/Kolkata
@@ -218,3 +228,7 @@ services:
       - TZ=Asia/Kolkata
     volumes:
       - /cloud/Docker/homeassistant/config:/config
+
+networks:
+  gluetun_network:
+    driver: bridge
