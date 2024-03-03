@@ -1,4 +1,18 @@
 services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    volumes:
+      - /cloud/Docker/gluetun/config:/gluetun
+    environment:
+      - TZ=Asia/Kolkata
+      - VPN_SERVICE_PROVIDER=custom
+      - VPN_TYPE=openvpn
+      - OPENVPN_CUSTOM_CONFIG=/gluetun/custom.conf
   dash:
     image: mauricenino/dashdot:latest
     container_name: dash
