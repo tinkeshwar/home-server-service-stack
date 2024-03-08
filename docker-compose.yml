@@ -1,18 +1,4 @@
 services:
-  windows:
-    image: dockurr/windows
-    container_name: windows
-    devices:
-      - /dev/kvm
-    cap_add:
-      - NET_ADMIN
-    stop_grace_period: 2m
-    restart: on-failure
-    environment:
-      - VERSION=win11
-      - MANUAL=Y
-    volumes:
-      - /cloud/Docker/windows/storage:/storage
   dash:
     image: mauricenino/dashdot:latest
     container_name: dash
