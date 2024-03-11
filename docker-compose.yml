@@ -86,6 +86,7 @@ services:
     volumes:
       - /cloud/Docker/qtorrent/config:/config
       - /media2/Downloads:/downloads
+    network_mode: container:gluetun
   deluge:
     image: lscr.io/linuxserver/deluge:latest
     container_name: deluge
