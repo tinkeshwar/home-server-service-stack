@@ -97,6 +97,7 @@ services:
     volumes:
       - /cloud/Docker/deluge/config:/config
       - /media2/Downloads:/downloads
+    network_mode: container:gluetun
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
@@ -164,6 +165,7 @@ services:
     environment:
       - LOG_LEVEL=info
       - TZ=Asia/Kolkata
+    network_mode: container:gluetun
   mealie:
     image: ghcr.io/mealie-recipes/mealie:latest
     container_name: mealie
