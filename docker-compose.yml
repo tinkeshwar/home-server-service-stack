@@ -107,6 +107,7 @@ services:
       - TZ=Asia/Kolkata
     volumes:
       - /cloud/Docker/prowlarr/config:/config
+    network_mode: container:gluetun
   jackett:
     image: lscr.io/linuxserver/jackett:latest
     container_name: jackett
@@ -119,6 +120,7 @@ services:
     volumes:
       - /cloud/Docker/jackett/config:/config
       - /media2/Downloads:/downloads
+    network_mode: container:gluetun
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
