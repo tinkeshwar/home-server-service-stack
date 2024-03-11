@@ -54,6 +54,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Kolkata
+    network_mode: container:gluetun
   jellyseerr:
     image: fallenbagel/jellyseerr:latest
     container_name: jellyseerr
