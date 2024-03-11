@@ -1,14 +1,4 @@
 services:
-  dash:
-    image: mauricenino/dashdot:latest
-    container_name: dash
-    restart: unless-stopped
-    privileged: true
-    environment:
-      - DASHDOT_ENABLE_CPU_TEMPS=true
-      - DASHDOT_PAGE_TITLE='Tinkeshwar Singh Rajput'
-    volumes:
-      - /:/mnt/host:ro
   filebrowser:
     image: hurlenko/filebrowser
     container_name: filebrowser
