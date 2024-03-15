@@ -165,8 +165,6 @@ services:
       - /cloud/Docker/mylar3/config:/config
       - /media2/Comics:/comics
       - /media2/Downloads:/downloads
-    ports:
-      - 8090:8090
     restart: unless-stopped
   lidarr:
     image: lscr.io/linuxserver/lidarr:latest
@@ -179,8 +177,6 @@ services:
       - /cloud/Docker/lidarr/config:/config
       - /media2/Music:/music
       - /media2/Downloads:/downloads
-    ports:
-      - 8686:8686
     restart: unless-stopped
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
