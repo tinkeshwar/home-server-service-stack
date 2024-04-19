@@ -154,32 +154,6 @@ services:
       - /media2/Porn:/data
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
-  mylarr:
-    image: lscr.io/linuxserver/mylar3:latest
-    container_name: mylarr
-    restart: unless-stopped
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Kolkata
-    volumes:
-      - /cloud/Docker/mylar3/config:/config
-      - /media2/Comics:/comics
-      - /media2/Downloads:/downloads
-    network_mode: container:gluetun
-  lidarr:
-    image: lscr.io/linuxserver/lidarr:latest
-    container_name: lidarr
-    restart: unless-stopped
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Kolkata
-    volumes:
-      - /cloud/Docker/lidarr/config:/config
-      - /media2/Music:/music
-      - /media2/Downloads:/downloads
-    network_mode: container:gluetun
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     container_name: flaresolverr
