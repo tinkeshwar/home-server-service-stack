@@ -205,3 +205,30 @@ services:
     volumes:
       - /cloud/Docker/babybuddy/config:/config
     restart: unless-stopped
+  meilisearch:
+    image: getmeili/meilisearch:v1.9
+    container_name: meilisearch
+    volumes:
+      - meilisearch:/meili_data
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - MEILI_MASTER_KEY=${MEILI_API_KEY}
+    restart: unless-stopped
+    network_mode: container:gluetun
+  marlin:
+    build: ./marlin-search
+    container_name: marlin
+    ports:
+      - '5005:5000'
+    environment:
+      - NODE_ENV=production
+      - JELLYFIN_URL=http://jellyfin:8096
+      - JELLYFIN_API_KEY=${JELLYFIN_API_KEY}
+      - MEILISEARCH_API_KEY=$${MEILI_API_KEY}
+      - SCRAPE_INTERVAL_MINUTES=${SCRAPE_INTERVAL_MINUTES}
+      - EXPRESS_AUTH_TOKEN=${EXPRESS_AUTH_TOKEN}
+      - BATCH_SIZE=${BATCH_SIZE}
+      - MEILISEARCH_URL=http://meilisearch:7700
+    network_mode: container:gluetun
