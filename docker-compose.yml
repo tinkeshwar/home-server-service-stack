@@ -219,6 +219,7 @@ services:
     network_mode: container:gluetun
   marlin:
     build: ./marlin-search
+    image: marlin:latest
     container_name: marlin
     ports:
       - '5005:5000'
