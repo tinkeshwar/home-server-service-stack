@@ -209,7 +209,7 @@ services:
     image: getmeili/meilisearch:v1.9
     container_name: meilisearch
     volumes:
-      - meilisearch:/meili_data
+      - meili_data:/meili_data
     environment:
       - PUID=1000
       - PGID=1000
@@ -232,3 +232,6 @@ services:
       - BATCH_SIZE=${BATCH_SIZE}
       - MEILISEARCH_URL=http://meilisearch:7700
     network_mode: container:gluetun
+
+volumes:
+  meili_data:
