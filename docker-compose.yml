@@ -218,9 +218,7 @@ services:
     restart: unless-stopped
     network_mode: container:gluetun
   marlin:
-    build:
-      context: ./marlin-search
-      dockerfile: ./Dockerfile
+    build: ./marlin-search
     image: marlin:latest
     container_name: marlin
     environment:
