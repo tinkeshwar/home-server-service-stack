@@ -230,6 +230,16 @@ services:
       - BATCH_SIZE=${BATCH_SIZE}
       - MEILISEARCH_URL=http://127.0.0.1:7700
     network_mode: container:gluetun
+  mario:
+    image: fredrikburmester/streamyfin-optimized-versions-server:master
+    environment:
+      - NODE_ENV=development
+      - JELLYFIN_URL=http://127.0.0.1:8096
+      - MAX_CONCURRENT_JOBS=5
+    restart: unless-stopped
+    volumes:
+      - ./cache:/usr/src/app/cache
+    network_mode: container:gluetun
 
 volumes:
   meili_data:
