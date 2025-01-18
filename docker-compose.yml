@@ -232,6 +232,7 @@ services:
     network_mode: container:gluetun
   mario:
     image: fredrikburmester/streamyfin-optimized-versions-server:master
+    container_name: mario
     environment:
       - NODE_ENV=development
       - JELLYFIN_URL=http://127.0.0.1:8096
