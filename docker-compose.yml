@@ -241,6 +241,16 @@ services:
     volumes:
       - ./cache:/usr/src/app/cache
     network_mode: container:gluetun
+  optimizarr:
+    build: ./optimizarr
+    container_name: optimizarr
+    environment:
+      - SCAN_INTERVAL=3600
+    volumes:
+      - ./optimizarr/app:/app
+      - /media2/Downloads/Raw:/storage/path1
+      - /media2/Downloads:/optimized
+    restart: always
 
 volumes:
   meili_data:
