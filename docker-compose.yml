@@ -246,6 +246,9 @@ services:
     container_name: optimizarr
     environment:
       - SCAN_INTERVAL=3600
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
     volumes:
       - ./optimizarr/app:/app
       - /media2/Downloads/Raw:/storage/path1
