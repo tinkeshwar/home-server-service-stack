@@ -185,15 +185,18 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   homeassistant:
-    image: lscr.io/linuxserver/homeassistant:latest
+    image: ghcr.io/home-assistant/home-assistant:stable
     container_name: homeassistant
     restart: unless-stopped
+    privileged: true
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Kolkata
     volumes:
       - /cloud/Docker/homeassistant/config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
   babybuddy:
     image: lscr.io/linuxserver/babybuddy:latest
     container_name: babybuddy
