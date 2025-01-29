@@ -207,12 +207,7 @@ services:
       - /cloud/Docker/homeassistant/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    networks:
-      - default
-    depends_on:
-      - proxy
+    
 
   babybuddy:
     image: lscr.io/linuxserver/babybuddy:latest
