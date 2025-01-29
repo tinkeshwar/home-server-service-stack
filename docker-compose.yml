@@ -14,6 +14,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Kolkata
+
   proxy:
     image: 'jc21/nginx-proxy-manager:latest'
     container_name: proxy
@@ -27,6 +28,7 @@ services:
     volumes:
       - /cloud/Docker/proxy/data:/data
       - /cloud/Docker/proxy/letsencrypt:/etc/letsencrypt
+
   homer:
     image: ghcr.io/ajnart/homarr:latest
     container_name: homer
@@ -41,10 +43,11 @@ services:
       - PGID=1000
       - TZ=Asia/Kolkata
       - INIT_ASSETS=1
+
   jellyfin:
     image: jellyfin/jellyfin:latest
     container_name: jellyfin
-    restart: 'unless-stopped'
+    restart: unless-stopped
     volumes:
       - /cloud/Docker/jellyfin/config:/config
       - /cloud/Docker/jellyfin/cache:/cache
@@ -55,6 +58,7 @@ services:
       - PGID=1000
       - TZ=Asia/Kolkata
     network_mode: container:gluetun
+
   jellyseerr:
     image: fallenbagel/jellyseerr:latest
     container_name: jellyseerr
@@ -65,6 +69,7 @@ services:
     volumes:
       - /cloud/Docker/jellyseerr/config:/app/config
     network_mode: container:gluetun
+
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
@@ -79,6 +84,7 @@ services:
       - /cloud/Docker/qtorrent/config:/config
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
+
   deluge:
     image: lscr.io/linuxserver/deluge:latest
     container_name: deluge
@@ -91,6 +97,7 @@ services:
       - /cloud/Docker/deluge/config:/config
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
+
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
@@ -102,6 +109,7 @@ services:
     volumes:
       - /cloud/Docker/prowlarr/config:/config
     network_mode: container:gluetun
+
   jackett:
     image: lscr.io/linuxserver/jackett:latest
     container_name: jackett
@@ -115,6 +123,7 @@ services:
       - /cloud/Docker/jackett/config:/config
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
+
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
@@ -128,6 +137,7 @@ services:
       - /media1/Movies:/movies
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
+
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
@@ -197,6 +207,13 @@ services:
       - /cloud/Docker/homeassistant/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - default
+    depends_on:
+      - proxy
+
   babybuddy:
     image: lscr.io/linuxserver/babybuddy:latest
     container_name: babybuddy
@@ -208,6 +225,7 @@ services:
     volumes:
       - /cloud/Docker/babybuddy/config:/config
     restart: unless-stopped
+
   meilisearch:
     image: getmeili/meilisearch:v1.9
     container_name: meilisearch
