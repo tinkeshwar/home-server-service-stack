@@ -219,6 +219,8 @@ services:
     restart: unless-stopped
     environment:
       - TZ=Asia/Kolkata
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_REMOVE_VOLUMES=true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   homeassistant:
