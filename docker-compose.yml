@@ -2,6 +2,7 @@ services:
   gluetun:
     image: qmcgaw/gluetun
     container_name: gluetun
+    restart: unless-stopped
     cap_add:
       - NET_ADMIN
     devices:
@@ -15,7 +16,6 @@ services:
       - OPENVPN_CUSTOM_CONFIG=/gluetun/custom.conf
       - OPENVPN_USER=${MY_OPENVPN_USER_FROM_ENV_FILE}
       - OPENVPN_PASSWORD=${MY_OPENVPN_PASSWORD_FROM_ENV_FILE}
-    restart: unless-stopped
   filebrowser:
     image: hurlenko/filebrowser
     container_name: filebrowser
@@ -258,6 +258,7 @@ services:
   meilisearch:
     image: getmeili/meilisearch:v1.9
     container_name: meilisearch
+    restart: unless-stopped
     volumes:
       - meili_data:/meili_data
     environment:
@@ -265,13 +266,13 @@ services:
       - PGID=1000
       - TZ=Asia/Kolkata
       - MEILI_MASTER_KEY=${MEILI_API_KEY}
-    restart: unless-stopped
     network_mode: container:gluetun
     depends_on:
       - gluetun
   marlin:
     build: ./marlin-search
     container_name: marlin
+    restart: unless-stopped
     environment:
       - NODE_ENV=production
       - JELLYFIN_URL=http://127.0.0.1:8096
@@ -287,11 +288,11 @@ services:
   mario:
     image: fredrikburmester/streamyfin-optimized-versions-server:master
     container_name: mario
+    restart: unless-stopped
     environment:
       - NODE_ENV=development
       - JELLYFIN_URL=http://127.0.0.1:8096
       - MAX_CONCURRENT_JOBS=5
-    restart: unless-stopped
     volumes:
       - ./cache:/usr/src/app/cache
     network_mode: container:gluetun
