@@ -290,18 +290,6 @@ services:
     depends_on:
       - gluetun
       - jellyfin
-  spotube:
-    image: lscr.io/linuxserver/spotube:latest
-    container_name: spotube
-    restart: unless-stopped
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Kolkata
-      - CUSTOM_PORT=3441
-      - CUSTOM_HTTPS_PORT=3442
-    volumes:
-      - /cloud/Docker/spotube/config:/config
 
 volumes:
   meili_data:
