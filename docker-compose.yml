@@ -285,11 +285,23 @@ services:
       - JELLYFIN_URL=http://127.0.0.1:8096
       - MAX_CONCURRENT_JOBS=5
     volumes:
-      - ./cache:/usr/src/app/cache
+      - /cloud/Docker/mario/config/cache:/usr/src/app/cache
     network_mode: container:gluetun
     depends_on:
       - gluetun
       - jellyfin
+  spotube:
+    image: lscr.io/linuxserver/spotube:latest
+    container_name: spotube
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - CUSTOM_PORT=3441
+      - CUSTOM_HTTPS_PORT=3442
+    volumes:
+      - /cloud/Docker/spotube/config:/config
 
 volumes:
   meili_data:
