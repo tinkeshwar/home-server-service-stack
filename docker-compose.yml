@@ -1,4 +1,20 @@
 services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    volumes:
+      - /cloud/Docker/gluetun/config:/gluetun
+    environment:
+      - TZ=Asia/Kolkata
+      - VPN_SERVICE_PROVIDER=custom
+      - VPN_TYPE=openvpn
+      - OPENVPN_CUSTOM_CONFIG=/gluetun/custom.conf
+      - OPENVPN_USER=${MY_OPENVPN_USER_FROM_ENV_FILE}
+      - OPENVPN_PASSWORD=${MY_OPENVPN_PASSWORD_FROM_ENV_FILE}
   filebrowser:
     image: hurlenko/filebrowser
     container_name: filebrowser
@@ -58,6 +74,8 @@ services:
       - PGID=1000
       - TZ=Asia/Kolkata
     network_mode: container:gluetun
+    depends_on:
+      - gluetun
 
   jellyseerr:
     image: fallenbagel/jellyseerr:latest
@@ -69,6 +87,8 @@ services:
     volumes:
       - /cloud/Docker/jellyseerr/config:/app/config
     network_mode: container:gluetun
+    depends_on:
+      - gluetun
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
@@ -84,6 +104,8 @@ services:
       - /cloud/Docker/qtorrent/config:/config
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
+    depends_on:
+      - gluetun
 
   deluge:
     image: lscr.io/linuxserver/deluge:latest
@@ -97,6 +119,8 @@ services:
       - /cloud/Docker/deluge/config:/config
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
+    depends_on:
+      - gluetun
 
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
@@ -109,6 +133,8 @@ services:
     volumes:
       - /cloud/Docker/prowlarr/config:/config
     network_mode: container:gluetun
+    depends_on:
+      - gluetun
 
   jackett:
     image: lscr.io/linuxserver/jackett:latest
@@ -123,6 +149,8 @@ services:
       - /cloud/Docker/jackett/config:/config
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
+    depends_on:
+      - gluetun
 
   radarr:
     image: lscr.io/linuxserver/radarr:latest
@@ -137,6 +165,8 @@ services:
       - /media1/Movies:/movies
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
+    depends_on:
+      - gluetun
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -151,6 +181,8 @@ services:
       - /media2/TV:/tv
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
+    depends_on:
+      - gluetun
   whisparr:
     container_name: whisparr
     image: ghcr.io/hotio/whisparr
@@ -164,6 +196,8 @@ services:
       - /media2/Porn:/data
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
+    depends_on:
+      - gluetun
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     container_name: flaresolverr
@@ -172,6 +206,8 @@ services:
       - LOG_LEVEL=info
       - TZ=Asia/Kolkata
     network_mode: container:gluetun
+    depends_on:
+      - gluetun
   mealie:
     image: ghcr.io/mealie-recipes/mealie:latest
     container_name: mealie
@@ -207,8 +243,6 @@ services:
       - /cloud/Docker/homeassistant/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
-    
-
   babybuddy:
     image: lscr.io/linuxserver/babybuddy:latest
     container_name: babybuddy
@@ -220,7 +254,6 @@ services:
     volumes:
       - /cloud/Docker/babybuddy/config:/config
     restart: unless-stopped
-
   meilisearch:
     image: getmeili/meilisearch:v1.9
     container_name: meilisearch
@@ -233,6 +266,8 @@ services:
       - MEILI_MASTER_KEY=${MEILI_API_KEY}
     restart: unless-stopped
     network_mode: container:gluetun
+    depends_on:
+      - gluetun
   marlin:
     build: ./marlin-search
     container_name: marlin
@@ -246,6 +281,8 @@ services:
       - BATCH_SIZE=${BATCH_SIZE}
       - MEILISEARCH_URL=http://127.0.0.1:7700
     network_mode: container:gluetun
+    depends_on:
+      - gluetun
   mario:
     image: fredrikburmester/streamyfin-optimized-versions-server:master
     container_name: mario
@@ -257,6 +294,8 @@ services:
     volumes:
       - ./cache:/usr/src/app/cache
     network_mode: container:gluetun
+    depends_on:
+      - gluetun
 
 volumes:
   meili_data:
