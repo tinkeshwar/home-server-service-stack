@@ -183,7 +183,7 @@ services:
       - PGID=1000
       - TZ=Asia/Kolkata
     volumes:
-      - /cloud/Docker/whisparr/config:/config
+      - /cloud/Docker/whisparr/configV3:/config
       - /media2/Porn:/data
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
