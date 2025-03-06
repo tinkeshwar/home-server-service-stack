@@ -176,7 +176,7 @@ services:
       - gluetun
   whisparr:
     container_name: whisparr
-    image: ghcr.io/hotio/whisparr:latest
+    image: ghcr.io/hotio/whisparr:v3
     restart: unless-stopped
     environment:
       - PUID=1000
