@@ -176,14 +176,14 @@ services:
       - gluetun
   whisparr:
     container_name: whisparr
-    image: ghcr.io/hotio/whisparr:v3
+    image: ghcr.io/hotio/whisparr:latest
     restart: unless-stopped
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Kolkata
     volumes:
-      - /cloud/Docker/whisparr/configV3:/config
+      - /cloud/Docker/whisparr/config:/config
       - /media2/Porn:/data
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
