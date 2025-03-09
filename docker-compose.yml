@@ -197,6 +197,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Kolkata
+      - WEBUI_PORTS=6996
     volumes:
       - /cloud/Docker/whisparr/configV3:/config
       - /media2/PornV3:/movies
