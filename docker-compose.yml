@@ -321,11 +321,11 @@ services:
       - /media2:/video-output/optimized
     environment:
       - SCAN_INTERVAL=30
-      - HOST_CPU_MODEL="$(lscpu | grep 'Model name' | awk -F ':' '{print $2}' | xargs)"
-      - HOST_TOTAL_RAM="$(grep MemTotal /proc/meminfo | awk '{print $2}')"
-      - HOST_GPU_MODEL="$(lspci | grep -E 'VGA|3D' | xargs)"
-      - HOST_OS="$(uname -s)"
-      - HOST_OS_VERSION="$(uname -r)"
+      - HOST_CPU_MODEL=AMD Ryzen 5 7600 6-Core Processor
+      - HOST_TOTAL_RAM=15534148
+      - HOST_GPU_MODEL="12:00.0 VGA compatible controller:Advanced Micro Devices, Inc. [AMD/ATI] Raphael (rev c6)"
+      - HOST_OS=Linux
+      - HOST_OS_VERSION=6.8.0-57-generic
     devices:
       - /dev/dri:/dev/dri
     privileged: true
