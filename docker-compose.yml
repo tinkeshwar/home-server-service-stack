@@ -326,6 +326,9 @@ services:
       - HOST_GPU_MODEL="$(lspci | grep -E 'VGA|3D' | xargs)"
       - HOST_OS="$(uname -s)"
       - HOST_OS_VERSION="$(uname -r)"
+    devices:
+      - /dev/dri:/dev/dri
+    privileged: true
 
 volumes:
   meili_data:
