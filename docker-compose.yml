@@ -308,5 +308,24 @@ services:
       - gluetun
       - jellyfin
 
+  optimizer:
+    image: tinkeshwar/video-optimizer-ai:latest
+    container_name: optimizer
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - /cloud/Docker/ai-optimizer/config:/data
+      - /media1:/video-input/media1
+      - /media2:/video-input/media2
+      - /media2:/video-output/optimized
+    environment:
+      - SCAN_INTERVAL=30
+      - HOST_CPU_MODEL="$(lscpu | grep 'Model name' | awk -F ':' '{print $2}' | xargs)"
+      - HOST_TOTAL_RAM="$(grep MemTotal /proc/meminfo | awk '{print $2}')"
+      - HOST_GPU_MODEL="$(lspci | grep -E 'VGA|3D' | xargs)"
+      - HOST_OS="$(uname -s)"
+      - HOST_OS_VERSION="$(uname -r)"
+
 volumes:
   meili_data:
