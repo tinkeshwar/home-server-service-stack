@@ -309,7 +309,7 @@ services:
       - jellyfin
 
   optimizer:
-    image: tinkeshwar/video-optimizer-ai:latest
+    image: tinkeshwar/video-optimizer-ai:alpha
     container_name: optimizer
     restart: unless-stopped
     env_file:
