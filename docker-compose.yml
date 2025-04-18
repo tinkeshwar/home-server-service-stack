@@ -319,7 +319,7 @@ services:
       - /media1/Movies:/video-input/movies
       - /media2/Porn:/video-input/porn
       - /media2/TV:/video-input/tv
-      - /media2/Optimized:/video-output/optimized
+      - /media2/Optimized:/video-output
     environment:
       - SCAN_INTERVAL=30
       - HOST_CPU_MODEL=AMD Ryzen 5 7600 6-Core Processor
