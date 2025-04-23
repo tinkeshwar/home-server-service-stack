@@ -326,6 +326,7 @@ services:
       - HOST_TOTAL_RAM=15534148
       - HOST_OS=Linux
       - HOST_OS_VERSION=6.8.0-57-generic
+      - AI_MODEL=gpt-4.1-mini
     devices:
       - /dev/dri:/dev/dri
     privileged: true
