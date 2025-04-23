@@ -324,7 +324,6 @@ services:
       - SCAN_INTERVAL=30
       - HOST_CPU_MODEL=AMD Ryzen 5 7600 6-Core Processor
       - HOST_TOTAL_RAM=15534148
-      - HOST_GPU_MODEL=03:00.0 VGA compatible controller Advanced Micro Devices, Inc. [AMD/ATI] Navi 23 [Radeon RX 6600/6600 XT/6600M] (rev c7)
       - HOST_OS=Linux
       - HOST_OS_VERSION=6.8.0-57-generic
     devices:
