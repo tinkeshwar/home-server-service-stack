@@ -233,14 +233,14 @@ services:
       - /media1/Movies:/video-input/movies
       - /media2/Porn:/video-input/porn
       - /media2/TV:/video-input/tv
-      - /media2/Optimized:/video-output/optimized
+      - /media2/Optimized:/video-output
     environment:
       - SCAN_INTERVAL=30
       - HOST_CPU_MODEL=AMD Ryzen 5 7600 6-Core Processor
       - HOST_TOTAL_RAM=15534148
-      - HOST_GPU_MODEL="12:00.0 VGA compatible controller:Advanced Micro Devices, Inc. [AMD/ATI] Raphael (rev c6)"
       - HOST_OS=Linux
       - HOST_OS_VERSION=6.8.0-57-generic
+      - AI_MODEL=gpt-4.1-mini
     devices:
       - /dev/dri:/dev/dri
     privileged: true
