@@ -44,6 +44,20 @@ services:
     volumes:
       - /cloud/Docker/proxy/data:/data
       - /cloud/Docker/proxy/letsencrypt:/etc/letsencrypt
+  homer:
+    image: ghcr.io/ajnart/homarr:latest
+    container_name: homer
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /cloud/Docker/homarr/configs:/app/data/configs
+      - /cloud/Docker/homarr/icons:/app/public/icons
+      - /cloud/Docker/homarr/data:/data
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - INIT_ASSETS=1
   jellyfin:
     image: jellyfin/jellyfin:latest
     container_name: jellyfin
@@ -200,6 +214,20 @@ services:
     network_mode: container:gluetun
     depends_on:
       - gluetun
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:latest
+    container_name: mealie
+    restart: always
+    volumes:
+      - /cloud/Docker/mealie:/app/data/
+    environment:
+      - ALLOW_SIGNUP=true
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - MAX_WORKERS=1
+      - WEB_CONCURRENCY=1
+      - BASE_URL=https://meal.tinkeshwar.in
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower
@@ -222,6 +250,64 @@ services:
       - /cloud/Docker/homeassistant/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
+  babybuddy:
+    image: lscr.io/linuxserver/babybuddy:latest
+    container_name: babybuddy
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - CSRF_TRUSTED_ORIGINS=https://babybuddy.tinkeshwar.in
+    volumes:
+      - /cloud/Docker/babybuddy/config:/config
+    restart: unless-stopped
+  meilisearch:
+    image: getmeili/meilisearch:v1.9
+    container_name: meilisearch
+    restart: unless-stopped
+    volumes:
+      - meili_data:/meili_data
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - MEILI_MASTER_KEY=${MEILI_API_KEY}
+    network_mode: container:gluetun
+    depends_on:
+      - gluetun
+  marlin:
+    build: ./marlin-search
+    container_name: marlin
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - JELLYFIN_URL=http://127.0.0.1:8096
+      - JELLYFIN_API_KEY=${JELLYFIN_API_KEY}
+      - MEILISEARCH_API_KEY=${MEILI_API_KEY}
+      - SCRAPE_INTERVAL_MINUTES=${SCRAPE_INTERVAL_MINUTES}
+      - EXPRESS_AUTH_TOKEN=${EXPRESS_AUTH_TOKEN}
+      - BATCH_SIZE=${BATCH_SIZE}
+      - MEILISEARCH_URL=http://127.0.0.1:7700
+    network_mode: container:gluetun
+    depends_on:
+      - gluetun
+      - jellyfin
+      - meilisearch
+  mario:
+    image: fredrikburmester/streamyfin-optimized-versions-server:master
+    container_name: mario
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=development
+      - JELLYFIN_URL=http://127.0.0.1:8096
+      - MAX_CONCURRENT_JOBS=5
+    volumes:
+      - /cloud/Docker/mario/config/cache:/usr/src/app/cache
+    network_mode: container:gluetun
+    depends_on:
+      - gluetun
+      - jellyfin
+
   optimizer:
     image: tinkeshwar/video-optimizer-ai:alpha
     container_name: optimizer
@@ -244,3 +330,6 @@ services:
     devices:
       - /dev/dri:/dev/dri
     privileged: true
+
+volumes:
+  meili_data:
