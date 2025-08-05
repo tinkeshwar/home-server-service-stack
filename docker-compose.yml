@@ -268,3 +268,6 @@ services:
       - /cloud/Docker/stash-app/blobs:/blobs
       - /cloud/Docker/stash-app/generated:/generated
       - /media2/Porn:/data
+    network_mode: container:gluetun
+    depends_on:
+      - gluetun
