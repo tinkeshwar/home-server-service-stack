@@ -244,3 +244,27 @@ services:
     devices:
       - /dev/dri:/dev/dri
     privileged: true
+  
+  stash:
+    image: stashapp/stash:latest
+    container_name: stash
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "2m"
+    environment:
+      - STASH_STASH=/data/
+      - STASH_GENERATED=/generated/
+      - STASH_METADATA=/metadata/
+      - STASH_CACHE=/cache/
+      - STASH_PORT=6969
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /cloud/Docker/stash-app/config:/root/.stash
+      - /cloud/Docker/stash-app/metadata:/metadata
+      - /cloud/Docker/stash-app/cache:/cache
+      - /cloud/Docker/stash-app/blobs:/blobs
+      - /cloud/Docker/stash-app/generated:/generated
+      - /media2/Porn:/data
