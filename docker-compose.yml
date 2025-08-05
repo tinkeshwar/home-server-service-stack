@@ -259,7 +259,7 @@ services:
       - STASH_GENERATED=/generated/
       - STASH_METADATA=/metadata/
       - STASH_CACHE=/cache/
-      - STASH_PORT=6969
+      - STASH_PORT=6996
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /cloud/Docker/stash-app/config:/root/.stash
