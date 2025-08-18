@@ -4,10 +4,8 @@ services:
     container_name: ai
     restart: unless-stopped
     environment:
-      - DEBUG=false
       - MODELS_PATH=/models
-      - GPU_ACCELERATION=rocm
-      - LOCALAI_API_PORT=8420
+      - PORT=8420
     volumes:
       - /cloud/AI/models:/models
     devices:
