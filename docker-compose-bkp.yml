@@ -1,4 +1,24 @@
 services:
+  ai:
+    image: localai/localai:latest-gpu-hipblas
+    container_name: ai
+    restart: unless-stopped
+    environment:
+      - DEBUG=true
+      - LOCALAI_FORCE_META_BACKEND_CAPABILITY=amd
+      - REBUILD=true
+      - BUILD_TYPE=hipblas
+      - MODELS_PATH=/models
+      - GPU_TARGETS=gfx1032
+    volumes:
+      - /cloud/AI/models:/models
+      - /cloud/AI/data:/data
+    devices:
+      - /dev/kfd:/dev/kfd
+      - /dev/dri:/dev/dri
+    group_add:
+      - "render"
+      - "video"
   gluetun:
     image: qmcgaw/gluetun
     container_name: gluetun
