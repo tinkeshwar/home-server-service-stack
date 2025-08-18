@@ -10,6 +10,7 @@ services:
       - BUILD_TYPE=hipblas
       - MODELS_PATH=/models
       - PORT=8420
+      - GPU_TARGETS=gfx1032
     volumes:
       - /cloud/AI/models:/models
       - /cloud/AI/data:/data
