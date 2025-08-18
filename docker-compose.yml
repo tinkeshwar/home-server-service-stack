@@ -5,11 +5,10 @@ services:
     restart: unless-stopped
     environment:
       - DEBUG=true
-      - LOCALAI_FORCE_META_BACKEND_CAPABILITY=true
+      - LOCALAI_FORCE_META_BACKEND_CAPABILITY=amd
       - REBUILD=true
       - BUILD_TYPE=hipblas
       - MODELS_PATH=/models
-      - PORT=8420
       - GPU_TARGETS=gfx1032
     volumes:
       - /cloud/AI/models:/models
