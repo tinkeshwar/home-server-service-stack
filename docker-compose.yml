@@ -211,18 +211,6 @@ services:
       - WATCHTOWER_REMOVE_VOLUMES=true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-  homeassistant:
-    image: ghcr.io/home-assistant/home-assistant:stable
-    container_name: homeassistant
-    restart: unless-stopped
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Kolkata
-    volumes:
-      - /cloud/Docker/homeassistant/config:/config
-      - /etc/localtime:/etc/localtime:ro
-      - /run/dbus:/run/dbus:ro
   optimizer:
     image: tinkeshwar/video-optimizer-ai:alpha
     container_name: optimizer
@@ -245,30 +233,3 @@ services:
     devices:
       - /dev/dri:/dev/dri
     privileged: true
-  
-  stash:
-    image: stashapp/stash:latest
-    container_name: stash
-    restart: unless-stopped
-    logging:
-      driver: "json-file"
-      options:
-        max-file: "10"
-        max-size: "2m"
-    environment:
-      - STASH_STASH=/data/
-      - STASH_GENERATED=/generated/
-      - STASH_METADATA=/metadata/
-      - STASH_CACHE=/cache/
-      - STASH_PORT=6996
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /cloud/Docker/stash-app/config:/root/.stash
-      - /cloud/Docker/stash-app/metadata:/metadata
-      - /cloud/Docker/stash-app/cache:/cache
-      - /cloud/Docker/stash-app/blobs:/blobs
-      - /cloud/Docker/stash-app/generated:/generated
-      - /media2/Porn:/data
-    network_mode: container:gluetun
-    depends_on:
-      - gluetun
