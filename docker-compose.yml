@@ -4,10 +4,15 @@ services:
     container_name: ai
     restart: unless-stopped
     environment:
+      - DEBUG=true
+      - LOCALAI_FORCE_META_BACKEND_CAPABILITY=true
+      - REBUILD=true
+      - BUILD_TYPE=hipblas
       - MODELS_PATH=/models
       - PORT=8420
     volumes:
       - /cloud/AI/models:/models
+      - /cloud/AI/data:/data
     devices:
       - /dev/kfd:/dev/kfd
       - /dev/dri:/dev/dri
