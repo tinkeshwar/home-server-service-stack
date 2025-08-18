@@ -1,4 +1,22 @@
 services:
+  ai:
+    image: localai/localai:latest-gpu-hipblas
+    container_name: localai
+    restart: unless-stopped
+    ports:
+      - "8420:8080"
+    environment:
+      - DEBUG=false
+      - MODELS_PATH=/models
+      - GPU_ACCELERATION=rocm
+    volumes:
+      - /cloud/AI/models:/models
+    devices:
+      - /dev/kfd:/dev/kfd
+      - /dev/dri:/dev/dri
+    group_add:
+      - "render"
+      - "video"
   gluetun:
     image: qmcgaw/gluetun
     container_name: gluetun
