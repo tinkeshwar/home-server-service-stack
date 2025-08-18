@@ -1,14 +1,13 @@
 services:
   ai:
     image: localai/localai:latest-gpu-hipblas
-    container_name: localai
+    container_name: ai
     restart: unless-stopped
-    ports:
-      - "8420:8080"
     environment:
       - DEBUG=false
       - MODELS_PATH=/models
       - GPU_ACCELERATION=rocm
+      - LOCALAI_API_PORT=8420
     volumes:
       - /cloud/AI/models:/models
     devices:
