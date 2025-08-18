@@ -205,6 +205,7 @@ services:
       - TZ=Asia/Kolkata
     volumes:
       - /cloud/Docker/whisparr/configV3:/config
+      - /media2/Porn:/v2
       - /media2/PornV3:/movies
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
