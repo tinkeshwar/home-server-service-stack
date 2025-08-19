@@ -24,7 +24,8 @@ services:
       - /cloud/Docker/filebrowser/config:/config
       - /media1/Movies:/data/Movies
       - /media1/Misc:/data/Misc
-      - /media2/Porn:/data/Porn
+      - /media2/Porn:/data/PornV2
+      - /media2/PornV3:/data/Porn
       - /media2/TV:/data/TV
       - /media2/Downloads:/data/Downloads
     environment:
@@ -220,7 +221,7 @@ services:
     volumes:
       - /cloud/Docker/ai-optimizer/config:/data
       - /media1/Movies:/video-input/movies
-      - /media2/Porn:/video-input/porn
+      - /media2/PornV3:/video-input/porn
       - /media2/TV:/video-input/tv
       - /media2/Optimized:/video-output
     environment:
