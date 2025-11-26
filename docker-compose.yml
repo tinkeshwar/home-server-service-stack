@@ -28,6 +28,7 @@ services:
       - /media2/PornV3:/data/Porn
       - /media2/TV:/data/TV
       - /media2/Downloads:/data/Downloads
+      - /media2/Optimized:/data/Optimized
     environment:
       - PUID=1000
       - PGID=1000
