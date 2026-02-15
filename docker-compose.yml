@@ -204,16 +204,13 @@ services:
     network_mode: container:gluetun
     depends_on:
       - gluetun
-  watchtower:
-    image: containrrr/watchtower
-    container_name: watchtower
-    restart: unless-stopped
-    environment:
-      - TZ=Asia/Kolkata
-      - WATCHTOWER_CLEANUP=true
-      - WATCHTOWER_REMOVE_VOLUMES=true
+  wud:
+    image: fmartinou/whats-up-docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WUD_TRIGGER_DOCKER_LOCAL_ENABLED=true # Enable auto-update
+      - WUD_TRIGGER_DOCKER_LOCAL_PRUNE=true    # Cleanup old images
   optimizer:
     image: tinkeshwar/video-optimizer-ai:alpha
     container_name: optimizer
