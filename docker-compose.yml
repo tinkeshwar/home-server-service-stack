@@ -241,6 +241,8 @@ services:
       - /cloud/Photos:/data
     environment:
       - TZ=Asia/Kolkata
+      - DB_HOSTNAME=immich-database
+      - REDIS_HOSTNAME=immich-redis
     env_file:
       - .env
     depends_on:
