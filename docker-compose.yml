@@ -207,6 +207,7 @@ services:
   wud:
     image: fmartinou/whats-up-docker
     container_name: wud
+    restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
@@ -238,7 +239,7 @@ services:
     container_name: immich_server
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
     volumes:
-      - /cloud/Photos:/data
+      - /ocean/Photos:/data
     environment:
       - TZ=Asia/Kolkata
       - DB_HOSTNAME=immich-database
