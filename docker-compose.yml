@@ -64,6 +64,7 @@ services:
       - gluetun
   jellyseerr:
     image: ghcr.io/seerr-team/seerr:latest
+    init: true
     container_name: jellyseerr
     restart: unless-stopped
     environment:
