@@ -63,7 +63,7 @@ services:
     depends_on:
       - gluetun
   jellyseerr:
-    image: fallenbagel/jellyseerr:latest
+    image: ghcr.io/seerr-team/seerr:latest
     container_name: jellyseerr
     restart: unless-stopped
     environment:
