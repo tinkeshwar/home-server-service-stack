@@ -7,6 +7,9 @@ services:
       - NET_ADMIN
     devices:
       - /dev/net/tun:/dev/net/tun
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     volumes:
       - /cloud/Docker/gluetun/config:/gluetun
     environment:
