@@ -7,9 +7,6 @@ services:
       - NET_ADMIN
     devices:
       - /dev/net/tun:/dev/net/tun
-    dns:
-      - 1.1.1.1
-      - 8.8.8.8
     volumes:
       - /cloud/Docker/gluetun/config:/gluetun
     environment:
@@ -19,11 +16,6 @@ services:
       - OPENVPN_CUSTOM_CONFIG=/gluetun/custom.conf
       - OPENVPN_USER=${MY_OPENVPN_USER_FROM_ENV_FILE}
       - OPENVPN_PASSWORD=${MY_OPENVPN_PASSWORD_FROM_ENV_FILE}
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "https://ipinfo.io"]
-      interval: 1m
-      timeout: 10s
-      retries: 3
   filebrowser:
     image: hurlenko/filebrowser
     container_name: filebrowser
@@ -69,8 +61,7 @@ services:
       - TZ=Asia/Kolkata
     network_mode: container:gluetun
     depends_on:
-      gluetun:
-        condition: service_healthy
+      - gluetun
   jellyseerr:
     image: ghcr.io/seerr-team/seerr:latest
     init: true
@@ -83,8 +74,7 @@ services:
       - /cloud/Docker/jellyseerr/config:/app/config
     network_mode: container:gluetun
     depends_on:
-      gluetun:
-        condition: service_healthy
+      - gluetun
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
@@ -100,8 +90,7 @@ services:
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
     depends_on:
-      gluetun:
-        condition: service_healthy
+      - gluetun
   deluge:
     image: lscr.io/linuxserver/deluge:latest
     container_name: deluge
@@ -128,8 +117,7 @@ services:
       - /cloud/Docker/prowlarr/config:/config
     network_mode: container:gluetun
     depends_on:
-      gluetun:
-        condition: service_healthy
+      - gluetun
   jackett:
     image: lscr.io/linuxserver/jackett:latest
     container_name: jackett
@@ -144,8 +132,7 @@ services:
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
     depends_on:
-      gluetun:
-        condition: service_healthy
+      - gluetun
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
@@ -160,8 +147,7 @@ services:
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
     depends_on:
-      gluetun:
-        condition: service_healthy
+      - gluetun
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
@@ -176,8 +162,7 @@ services:
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
     depends_on:
-      gluetun:
-        condition: service_healthy
+      - gluetun
   whisparr:
     container_name: whisparr
     image: ghcr.io/hotio/whisparr:latest
@@ -192,8 +177,7 @@ services:
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
     depends_on:
-      gluetun:
-        condition: service_healthy
+      - gluetun
   whisparr3:
     container_name: whisparr3
     image: ghcr.io/hotio/whisparr:v3
@@ -209,8 +193,7 @@ services:
       - /media2/Downloads:/downloads
     network_mode: container:gluetun
     depends_on:
-      gluetun:
-        condition: service_healthy
+      - gluetun
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     container_name: flaresolverr
@@ -220,8 +203,7 @@ services:
       - TZ=Asia/Kolkata
     network_mode: container:gluetun
     depends_on:
-      gluetun:
-        condition: service_healthy
+      - gluetun
   wud:
     image: fmartinou/whats-up-docker
     container_name: wud
