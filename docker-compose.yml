@@ -204,15 +204,17 @@ services:
     network_mode: container:gluetun
     depends_on:
       - gluetun
-  wud:
-    image: fmartinou/whats-up-docker
+  wud:  
+    image: getwud/wud:latest
     container_name: wud
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      - WUD_TRIGGER_DOCKER_LOCAL_ENABLED=true # Enable auto-update
-      - WUD_TRIGGER_DOCKER_LOCAL_PRUNE=true    # Cleanup old images
+      - WUD_LOG_LEVEL=info
+      - WUD_WATCHER_LOCAL_SOCKET=/var/run/docker.sock
+      - WUD_TRIGGER_DOCKER_LOCAL_AUTO=true
+      - WUD_TRIGGER_DOCKER_LOCAL_PRUNE=true
   optimizer:
     image: tinkeshwar/video-optimizer-ai:alpha
     container_name: optimizer
