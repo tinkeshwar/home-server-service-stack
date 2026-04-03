@@ -219,7 +219,7 @@ services:
       - WUD_TRIGGER_DOCKER_LOCAL_AUTO=false
       - WUD_TRIGGER_DOCKER_LOCAL_PRUNE=true
   optimizer:
-    image: tinkeshwar/video-optimizer-ai:alpha
+    image: tinkeshwar/video-optimizer-ai:latest
     container_name: optimizer
     restart: unless-stopped
     env_file:
@@ -236,7 +236,6 @@ services:
       - HOST_TOTAL_RAM=15534148
       - HOST_OS=Linux
       - HOST_OS_VERSION=6.8.0-57-generic
-      - AI_MODEL=gpt-4.1-mini
     devices:
       - /dev/dri:/dev/dri
     privileged: true
