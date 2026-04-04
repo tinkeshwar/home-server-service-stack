@@ -219,7 +219,7 @@ services:
       - WUD_TRIGGER_DOCKER_LOCAL_AUTO=false
       - WUD_TRIGGER_DOCKER_LOCAL_PRUNE=true
   optimizer:
-    image: tinkeshwar/video-optimizer-ai:latest
+    image: tinkeshwar/video-optimizer-ai:alpha
     container_name: optimizer
     restart: unless-stopped
     env_file:
