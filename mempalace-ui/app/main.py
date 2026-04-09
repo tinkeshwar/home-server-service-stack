@@ -45,21 +45,24 @@ async def add_rule(
     rule: str = Form(...),
     wing: str = Form("school-admin"),
     room: str = Form("architecture"),
-    hall: str = Form("advice"),  # Added back
     dry_run: str = Form(None)
 ):
     safe_rule = rule.replace("'", "'\\''")
-    temp_file = f"/tmp/rule_input.txt"
     
-    # The shell script logic:
-    # 1. Write rule to temp file
-    # 2. Mine the file into the palace
-    # 3. Cleanup
+    # 1. Create a directory named after your ROOM
+    # MemPalace uses the folder name as the room name automatically.
+    room_dir = f"/tmp/{room}"
+    temp_file = f"{room_dir}/rule_standard.txt"
+    
+    # 2. Command breakdown:
+    # - mkdir the room folder
+    # - write the rule into a file inside that folder
+    # - mine the folder while tagging it with the --wing
     shell_script = (
+        f"mkdir -p {room_dir} && "
         f"echo '{safe_rule}' > {temp_file} && "
-        f"uv run --with mempalace mempalace mine {temp_file} "
-        f"--wing {wing} --room {room} --hall {hall} && " # Added --hall flag
-        f"rm {temp_file}"
+        f"uv run --with mempalace mempalace mine {room_dir} --wing {wing} && "
+        f"rm -rf {room_dir}"
     )
     
     full_command = ["bash", "-c", shell_script]
@@ -70,14 +73,11 @@ async def add_rule(
     try:
         env = os.environ.copy()
         env["MEMPALACE_PATH"] = MEMPALACE_PATH
-        
-        # Execute the shell pipeline
         result = subprocess.run(full_command, capture_output=True, text=True, env=env)
         
         if result.returncode != 0:
             return {"status": "Error", "message": result.stderr or result.stdout}
             
         return RedirectResponse(url="/view", status_code=303)
-        
     except Exception as e:
         return {"status": "Critical Error", "message": str(e)}
