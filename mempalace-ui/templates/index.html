@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MemPalace Architect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-gray-800 p-8 rounded-xl shadow-2xl w-full max-w-2xl">
+        <h1 class="text-2xl font-bold mb-6 text-blue-400">🏰 MemPalace Rule Injector</h1>
+        
+        <form action="/add-rule" method="post" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium mb-1">Rule/Standard</label>
+                <textarea name="rule" rows="4" class="w-full p-3 bg-gray-700 rounded border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="e.g. Do not call BaseRepository methods directly in Controllers..."></textarea>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1">Wing</label>
+                    <input type="text" name="wing" value="school-admin" class="w-full p-2 bg-gray-700 rounded border border-gray-600">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Room</label>
+                    <input type="text" name="room" value="architecture" class="w-full p-2 bg-gray-700 rounded border border-gray-600">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Hall (Category)</label>
+                <select name="hall" class="w-full p-2 bg-gray-700 rounded border border-gray-600">
+                    <option value="advice">Advice (Rules/Standards)</option>
+                    <option value="technical">Technical (Implementation)</option>
+                    <option value="memory">Memory (Context)</option>
+                </select>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <input type="checkbox" name="dry_run" id="dry_run" value="true">
+                <label for="dry_run" class="text-sm">Dry Run (Preview Only)</label>
+            </div>
+
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded transition duration-200">
+                Inject Rule into Palace
+            </button>
+        </form>
+    </div>
+</body>
+</html>

@@ -295,3 +295,11 @@ services:
     environment:
       - DOZZLE_ENABLE_ACTIONS=true
       - DOZZLE_ENABLE_SHELL=true
+  
+  mempalace-ui:
+    build: ./mempalace-ui
+    volumes:
+      - /home/tinkeshwar/.mempalace:/home/tinkeshwar/.mempalace
+    environment:
+      - MEMPALACE_PATH=/home/tinkeshwar/.mempalace
+    restart: unless-stopped
