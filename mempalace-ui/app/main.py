@@ -49,13 +49,37 @@ async def add_rule(
     rule: str = Form(...),
     wing: str = Form("school-admin"),
     room: str = Form("architecture"),
-    hall: str = Form("advice")
+    hall: str = Form("advice"),
+    dry_run: str = Form(None) # Checkboxes send "true" or nothing
 ):
-    remote_cmd = f"import mempalace; mempalace.add_memory(text='{rule}', wing='{wing}', room='{room}', hall='{hall}')"
+    # 1. Prepare the command
+    safe_rule = rule.replace("'", "\\'")
+    remote_cmd = f"import mempalace; mempalace.add_memory(text='{safe_rule}', wing='{wing}', room='{room}', hall='{hall}')"
+    
+    # Use full path to uv if possible, or just 'uv'
     full_command = ["uv", "run", "--with", "mempalace", "python", "-c", remote_cmd]
-    
-    env = os.environ.copy()
-    env["MEMPALACE_PATH"] = MEMPALACE_PATH
-    subprocess.run(full_command, check=True, env=env)
-    
-    return RedirectResponse(url="/view", status_code=303)
+
+    # 2. If it's a dry run, DON'T execute. Just return the info.
+    if dry_run == "true":
+        return {
+            "status": "Dry Run", 
+            "command_preview": " ".join(full_command),
+            "data": {"rule": rule, "wing": wing, "room": room, "hall": hall}
+        }
+
+    # 3. Actual Execution
+    try:
+        env = os.environ.copy()
+        # Ensure the path is absolute for the container
+        env["MEMPALACE_PATH"] = MEMPALACE_PATH
+        
+        # Run with capture_output to prevent logs from crashing the stream
+        result = subprocess.run(full_command, capture_output=True, text=True, env=env)
+        
+        if result.returncode != 0:
+            return {"status": "Error", "message": result.stderr}
+            
+        return RedirectResponse(url="/view", status_code=303)
+        
+    except Exception as e:
+        return {"status": "Critical Error", "message": str(e)}
