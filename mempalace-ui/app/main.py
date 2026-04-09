@@ -12,7 +12,11 @@ MEMPALACE_PATH = os.getenv("MEMPALACE_PATH", "/home/tinkeshwar/.mempalace")
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(
+    request=request, 
+    name="index.html", 
+    context={"request": request}
+)
 
 @app.get("/view", response_class=HTMLResponse)
 async def view_data(request: Request, query: str = ""):
@@ -34,7 +38,11 @@ async def view_data(request: Request, query: str = ""):
     except Exception as e:
         data = f"Error fetching data: {str(e)}"
 
-    return templates.TemplateResponse("view.html", {"request": request, "data": data, "query": query})
+    return templates.TemplateResponse(
+        request=request, 
+        name="view.html", 
+        context={"request": request, "data": data, "query": query}
+    )
 
 @app.post("/add-rule")
 async def add_rule(

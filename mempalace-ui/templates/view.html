@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Palace - MemPalace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-2xl font-bold text-blue-400">🔍 Palace Explorer</h1>
+            <a href="/" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded text-sm transition">Add New Rule</a>
+        </div>
+
+        <form action="/view" method="get" class="mb-6 flex gap-2">
+            <input type="text" name="query" value="{{ query }}" placeholder="Search memories..." 
+                   class="flex-1 p-2 bg-gray-800 border border-gray-700 rounded outline-none focus:border-blue-500">
+            <button type="submit" class="bg-blue-600 px-6 py-2 rounded font-bold">Search</button>
+        </form>
+
+        <div class="bg-black border border-gray-800 p-6 rounded-lg font-mono text-sm overflow-x-auto whitespace-pre-wrap leading-relaxed shadow-inner">
+            {% if data %}
+                {{ data }}
+            {% else %}
+                <span class="text-gray-500">The palace is currently empty.</span>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

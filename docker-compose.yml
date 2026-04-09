@@ -297,6 +297,7 @@ services:
       - DOZZLE_ENABLE_SHELL=true
   
   mempalace-ui:
+    container_name: mempalace-ui
     build: ./mempalace-ui
     volumes:
       - /home/tinkeshwar/.mempalace:/home/tinkeshwar/.mempalace
