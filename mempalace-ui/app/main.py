@@ -48,18 +48,17 @@ async def add_rule(
     dry_run: str = Form(None)
 ):
     safe_rule = rule.replace("'", "'\\''")
-    
-    # 1. Create a directory named after your ROOM
-    # MemPalace uses the folder name as the room name automatically.
     room_dir = f"/tmp/{room}"
     temp_file = f"{room_dir}/rule_standard.txt"
     
-    # 2. Command breakdown:
-    # - mkdir the room folder
-    # - write the rule into a file inside that folder
-    # - mine the folder while tagging it with the --wing
+    # 1. Create the room directory
+    # 2. Init the directory so it has a mempalace.yaml (satisfies the error)
+    # 3. Write the rule file
+    # 4. Mine the folder into the wing
+    # 5. Cleanup
     shell_script = (
         f"mkdir -p {room_dir} && "
+        f"uv run --with mempalace mempalace init {room_dir} --yes && "
         f"echo '{safe_rule}' > {temp_file} && "
         f"uv run --with mempalace mempalace mine {room_dir} --wing {wing} && "
         f"rm -rf {room_dir}"
@@ -73,7 +72,8 @@ async def add_rule(
     try:
         env = os.environ.copy()
         env["MEMPALACE_PATH"] = MEMPALACE_PATH
-        result = subprocess.run(full_command, capture_output=True, text=True, env=env)
+        # We use a longer timeout because init + mine can take a few seconds
+        result = subprocess.run(full_command, capture_output=True, text=True, env=env, timeout=30)
         
         if result.returncode != 0:
             return {"status": "Error", "message": result.stderr or result.stdout}
