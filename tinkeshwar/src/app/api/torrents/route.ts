@@ -74,18 +74,39 @@ function mapQbState(state: string): string {
 
 async function getDelugeTorrents(): Promise<{ torrents: Torrent[]; dlSpeed: number; upSpeed: number }> {
   try {
+    const delugeUrl = DELUGE_URL;
+    let sessionCookie = "";
+
     const rpc = async (method: string, params: unknown[] = []) => {
-      const res = await fetch(`${DELUGE_URL}/json`, {
+      const res = await fetch(`${delugeUrl}/json`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(sessionCookie ? { Cookie: sessionCookie } : {}),
+        },
         body: JSON.stringify({ method, params, id: Date.now() }),
       });
+      // Capture session cookie from login response
+      const setCookie = res.headers.get("set-cookie");
+      if (setCookie) sessionCookie = setCookie.split(";")[0];
       return res.json();
     };
 
-    // Auth
-    await rpc("auth.login", [DELUGE_PASS]);
-    await rpc("web.connected");
+    // Auth — must capture cookie
+    const loginResult = await rpc("auth.login", [DELUGE_PASS]);
+    if (!loginResult?.result) {
+      return { torrents: [], dlSpeed: 0, upSpeed: 0 };
+    }
+
+    // Ensure connected to daemon
+    const connected = await rpc("web.connected");
+    if (!connected?.result) {
+      // Try to connect to first available host
+      const hosts = await rpc("web.get_hosts");
+      if (hosts?.result?.length > 0) {
+        await rpc("web.connect", [hosts.result[0][0]]);
+      }
+    }
 
     // Get torrents
     const result = await rpc("web.update_ui", [
