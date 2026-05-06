@@ -304,3 +304,16 @@ services:
     environment:
       - MEMPALACE_PATH=/home/tinkeshwar/.mempalace
     restart: unless-stopped
+
+  tinkeshwar-web:
+    container_name: tinkeshwar-web
+    build: ./tinkeshwar
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Kolkata
+      - ADMIN_TOKEN=${ADMIN_TOKEN}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./restart-is.sh:/app/scripts/restart-is.sh:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
