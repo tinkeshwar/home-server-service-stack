@@ -73,21 +73,29 @@ function getUptime(): string {
 }
 
 function getDisks(): { mount: string; used: number; total: number }[] {
-  try {
-    const output = execSync("df -BG /cloud /media1 /media2 /ocean 2>/dev/null || df -BG / 2>/dev/null", {
-      encoding: "utf-8",
-    });
-    const lines = output.trim().split("\n").slice(1);
-    return lines.map((line) => {
-      const parts = line.split(/\s+/);
-      const total = parseInt(parts[1]) || 0;
-      const used = parseInt(parts[2]) || 0;
-      const mount = parts[5] || "/";
-      return { mount, used, total };
-    });
-  } catch {
-    return [];
+  const targets = [
+    { path: "/host-disks/cloud", label: "/cloud" },
+    { path: "/host-disks/media1", label: "/media1" },
+    { path: "/host-disks/media2", label: "/media2" },
+    { path: "/host-disks/ocean", label: "/ocean" },
+  ];
+
+  const results: { mount: string; used: number; total: number }[] = [];
+
+  for (const { path, label } of targets) {
+    if (!existsSync(path)) continue;
+    try {
+      const output = execSync(`df -BG "${path}" 2>/dev/null | tail -1`, { encoding: "utf-8" }).trim();
+      const parts = output.split(/\s+/);
+      if (parts.length >= 4) {
+        const total = parseInt(parts[1]) || 0;
+        const used = parseInt(parts[2]) || 0;
+        results.push({ mount: label, used, total });
+      }
+    } catch { /* skip */ }
   }
+
+  return results;
 }
 
 interface DockerContainer {

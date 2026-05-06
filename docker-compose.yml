@@ -317,3 +317,7 @@ services:
       - ./restart-is.sh:/app/scripts/restart-is.sh:ro
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
+      - /cloud:/host-disks/cloud:ro
+      - /media1:/host-disks/media1:ro
+      - /media2:/host-disks/media2:ro
+      - /ocean:/host-disks/ocean:ro
